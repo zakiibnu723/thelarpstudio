@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The LARP Studio | Official Corporate & Product Portfolio</title>
+  <meta name="description" content="PT THE LARP STUDIO is an independent Indonesian software studio engineering high-performance mobile applications, creative tools, and local-first utilities." />
+  <meta name="keywords" content="The LARP Studio, PT THE LARP STUDIO, Android Developer, Mobile Apps, StickerCapture, AeroDrop, DazzCam, Software Publisher" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07090e;
+      --bg-surface: #0e131f;
+      --card-bg: rgba(20, 27, 45, 0.55);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-border-hover: rgba(99, 102, 241, 0.4);
+      --primary: #6366f1;
+      --primary-light: #818cf8;
+      --primary-glow: rgba(99, 102, 241, 0.3);
+      --cyan: #06b6d4;
+      --emerald: #10b981;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    /* Ambient Glow Backgrounds */
+    .glow-top {
+      position: absolute;
+      top: -150px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1200px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.18) 0%, rgba(6, 182, 212, 0.08) 45%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .glow-mid {
+      position: absolute;
+      top: 1400px;
+      right: -200px;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Navigation Bar */
+    header.site-header {
+      position: sticky;
+      top: 0;
+      background: rgba(7, 9, 14, 0.82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--card-border);
+      z-index: 100;
+    }
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 0;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--cyan));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: white;
+      box-shadow: 0 4px 15px var(--primary-glow);
+    }
+    .brand-text h2 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.4px;
+      line-height: 1.2;
+    }
+    .brand-text span {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-weight: 600;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: var(--text);
+    }
+    .btn-contact {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: all 0.2s;
+    }
+    .btn-contact:hover {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: var(--primary);
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 90px 0 60px;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 20px;
+      border-radius: 9999px;
+      background: rgba(99, 102, 241, 0.08);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      color: #c7d2fe;
+      font-size: 0.84rem;
+      font-weight: 600;
+      margin-bottom: 28px;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--emerald);
+      box-shadow: 0 0 10px var(--emerald);
+    }
+    .hero h1 {
+      font-size: 4rem;
+      font-weight: 800;
+      letter-spacing: -2px;
+      line-height: 1.12;
+      max-width: 960px;
+      margin: 0 auto 24px;
+    }
+    .hero h1 .gradient-text {
+      background: linear-gradient(135deg, #a5b4fc 0%, #38bdf8 50%, #818cf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto 40px;
+      font-weight: 400;
+    }
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 70px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), #4f46e5);
+      color: white;
+      font-weight: 600;
+      padding: 14px 34px;
+      border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 4px 25px var(--primary-glow);
+      transition: all 0.2s;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.45);
+    }
+    .btn-secondary {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      font-weight: 600;
+      padding: 14px 28px;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Key Stats Bar */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      background: rgba(14, 19, 31, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 110px;
+      backdrop-filter: blur(10px);
+    }
+    .stat-item {
+      text-align: center;
+      border-right: 1px solid var(--card-border);
+    }
+    .stat-item:last-child {
+      border-right: none;
+    }
+    .stat-number {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: var(--text);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Section Headings */
+    .section-header {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 56px;
+    }
+    .section-eyebrow {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--primary-light);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+    }
+
+    /* Portfolio Grid */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 28px;
+      margin-bottom: 120px;
+    }
+    .product-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--card-border-hover);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+    }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+    .app-icon-img {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      object-fit: cover;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .status-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 6px 12px;
+      border-radius: 9999px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+    }
+    .status-tag.active {
+      background: rgba(99, 102, 241, 0.12);
+      border-color: rgba(99, 102, 241, 0.3);
+      color: #a5b4fc;
+    }
+    .product-card h3 {
+      font-size: 1.55rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 10px;
+    }
+    .product-card p {
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      line-height: 1.6;
+      margin-bottom: 24px;
+      flex-grow: 1;
+    }
+    .feature-list {
+      list-style: none;
+      margin-bottom: 28px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 18px;
+    }
+    .feature-list li {
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .feature-list li::before {
+      content: "✓";
+      color: var(--cyan);
+      font-weight: 800;
+    }
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag {
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    /* Engineering Section */
+    .engineering-section {
+      background: linear-gradient(180deg, rgba(14, 19, 31, 0.4) 0%, rgba(7, 9, 14, 0.8) 100%);
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      padding: 64px 48px;
+      margin-bottom: 120px;
+    }
+    .eng-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 40px;
+    }
+    .eng-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 28px;
+    }
+    .eng-icon {
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+    }
+    .eng-card h4 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .eng-card p {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    /* Corporate & Legal Registry Section */
+    .corporate-section {
+      margin-bottom: 120px;
+    }
+    .corporate-card {
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      border-radius: 28px;
+      padding: 56px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+    .corp-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 36px;
+      margin-bottom: 40px;
+    }
+    .corp-item h5 {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--primary-light);
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+    .corp-item p {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      word-break: break-word;
+    }
+    .corp-item.full-width {
+      grid-column: span 3;
+    }
+    .badge-gov {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-left: 8px;
+      font-weight: 700;
+    }
+    .compliance-divider {
+      height: 1px;
+      background: var(--card-border);
+      margin: 32px 0;
+    }
+    .compliance-footer-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+    .compliance-footer-info a {
+      color: var(--primary-light);
+      text-decoration: none;
+    }
+
+    /* Footer */
+    footer.site-footer {
+      border-top: 1px solid var(--card-border);
+      padding: 60px 0 40px;
+      background: #05070a;
+      text-align: center;
+    }
+    .footer-brand {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.2rem;
+      margin-bottom: 16px;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 28px;
+      font-size: 0.9rem;
+    }
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover {
+      color: var(--text);
+    }
+    .copyright {
+      color: var(--text-dim);
+      font-size: 0.85rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero h1 { font-size: 2.8rem; }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+      .stat-item { border-right: none; }
+      .eng-grid { grid-template-columns: 1fr; }
+      .corp-grid { grid-template-columns: 1fr; }
+      .corp-item.full-width { grid-column: span 1; }
+      .compliance-footer-info { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow-top"></div>
+  <div class="glow-mid"></div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#" class="brand">
+          <div class="brand-icon">L</div>
+          <div class="brand-text">
+            <h2>The LARP Studio</h2>
+            <span>PT THE LARP STUDIO</span>
+          </div>
+        </a>
+        <nav class="nav-links">
+          <a href="#products">Portfolio</a>
+          <a href="#engineering">Engineering</a>
+          <a href="#corporate">Corporate & Compliance</a>
+          <a href="#contact" class="btn-contact">Contact Us</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero container">
+      <div class="status-badge">
+        <div class="status-dot"></div>
+        <span>PT THE LARP STUDIO • INDEPENDENT MOBILE APP STUDIO</span>
+      </div>
+      <h1>Engineering High-Performance<br><span class="gradient-text">Native Mobile Experiences</span></h1>
+      <p>We build purpose-driven Android utilities, creative engines, and frictionless local-first tools designed to delight millions of global users.</p>
+      
+      <div class="hero-actions">
+        <a href="#products" class="btn-primary">View App Portfolio</a>
+        <a href="#corporate" class="btn-secondary">Corporate Governance</a>
+      </div>
+
+      <!-- Live Stats -->
+      <div class="stats-bar">
+        <div class="stat-item">
+          <div class="stat-number">6+</div>
+          <div class="stat-label">Active Studio Projects</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Native Kotlin Architecture</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">&lt; 16ms</div>
+          <div class="stat-label">Ultra-Low Latency Pipelines</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">OJK & AHU</div>
+          <div class="stat-label">Verified Legal Entity</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Products / Apps Portfolio Section -->
+    <section id="products" class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Studio Showcase</div>
+        <h2 class="section-title">Flagship Applications</h2>
+        <p class="section-subtitle">Every application is handcrafted from scratch with dedicated custom codebases, solving distinct real-world workflows without bloated third-party SDKs.</p>
+      </div>
+
+      <div class="products-grid">
+        <!-- 1. StickerCapture -->
+        <div class="product-card">
+          <div class="card-top">
+            <img src="assets/stickercapture.png" alt="StickerCapture Icon" class="app-icon-img" />
+            <span class="status-tag active">Production Ready</span>
+          </div>
+          <h3>StickerCapture</h3>
+          <p>Instant animated sticker creator and frame-accurate video capture studio. Effortlessly transform short video loops and live screen interactions into high-fidelity animated sticker packs for WhatsApp and Telegram.</p>
+          <ul class="feature-list">
+            <li>Sub-second frame decimation & transparency clipping</li>
+            <li>Direct WebP animation compression engine</li>
+            <li>Zero cloud upload — 100% private on-device generation</li>
+          </ul>
+          <div class="tags">
+            <span class="tag">Kotlin</span>
+            <span class="tag">MediaCodec</span>
+            <span class="tag">Jetpack Compose</span>
+            <span class="tag">Utilities</span>
+          </div>
+        </div>
+
+        <!-- 2. DazzCam -->
+        <div class="product-card">
+          <div class="card-top">
+            <img src="assets/dazzcam.png" alt="DazzCam Icon" class="app-icon-img" />
+            <span class="status-tag active">Featured App</span>
+          </div>
+          <h3>DazzCam</h3>
+          <p>Vintage 35mm optical film simulation camera. Delivers authentic film grain science, light leak simulations, and chromatic halation mimicking legendary analog cameras directly in your viewfinder.</p>
+          <ul class="feature-list">
+            <li>Hardware-accelerated OpenGL ES optical shaders</li>
+            <li>Authentic color grading for CCD & 35mm emulsions</li>
+            <li>Real-time live viewfinder filter simulation</li>
+          </ul>
+          <div class="tags">
+            <span class="tag">OpenGL ES</span>
+            <span class="tag">CameraX</span>
+            <span class="tag">Photography</span>
+            <span class="tag">Creative</span>
+          </div>
+        </div>
+
+        <!-- 3. AeroDrop -->
+        <div class="product-card">
+          <div class="card-top">
+            <img src="assets/aerodrop.png" alt="AeroDrop Icon" class="app-icon-img" />
+            <span class="status-tag">In Development</span>
+          </div>
+          <h3>AeroDrop</h3>
+          <p>Zero-internet high-speed local peer-to-peer file transfer engine. Move gigabytes of media, archives, and APKs across local devices at peak Wi-Fi bandwidth with zero mobile data usage.</p>
+          <ul class="feature-list">
+            <li>Local Wi-Fi Direct socket pipeline discovery</li>
+            <li>Symmetric AES-256 peer-to-peer data encryption</li>
+            <li>Clean ad-free transfer dashboard</li>
+          </ul>
+          <div class="tags">
+            <span class="tag">Wi-Fi Direct</span>
+            <span class="tag">Socket I/O</span>
+            <span class="tag">Networking</span>
+            <span class="tag">Tools</span>
+          </div>
+        </div>
+
+        <!-- 4. Voiz -->
+        <div class="product-card">
+          <div class="card-top">
+            <img src="assets/voiz.png" alt="Voiz App Icon" class="app-icon-img" />
+            <span class="status-tag">Audio Studio</span>
+          </div>
+          <h3>Voiz AI Voice Effects</h3>
+          <p>Real-time digital signal processing audio modifier and voice effects synthesizer. Transform vocal recordings with robotic, cinematic, and ambient soundscapes with precision pitch modulation.</p>
+          <ul class="feature-list">
+            <li>Low-latency Oboe / OpenSL ES audio engine</li>
+            <li>Parametric equalization & formant shift algorithms</li>
+            <li>Instant lossless WAV and high-bitrate AAC export</li>
+          </ul>
+          <div class="tags">
+            <span class="tag">Audio DSP</span>
+            <span class="tag">Oboe NDK</span>
+            <span class="tag">Audio & Music</span>
+          </div>
+        </div>
+
+        <!-- 5. LinkShare -->
+        <div class="product-card">
+          <div class="card-top">
+            <img src="assets/linkshare.png" alt="LinkShare Icon" class="app-icon-img" />
+            <span class="status-tag">Productivity</span>
+          </div>
+          <h3>LinkShare Hub</h3>
+          <p>Centralized link management, smart bookmark categorization, and instant multi-platform routing. Organize research papers, developer docs, and inspiration boards with instant offline access.</p>
+          <ul class="feature-list">
+            <li>Local SQLite full-text search index (FTS5)</li>
+            <li>Smart URL metadata and OpenGraph scraping</li>
+            <li>One-tap export to markdown and clean JSON</li>
+          </ul>
+          <div class="tags">
+            <span class="tag">Room DB</span>
+            <span class="tag">FTS5 Search</span>
+            <span class="tag">Productivity</span>
+          </div>
+        </div>
+
+        <!-- 6. Notiv -->
+        <div class="product-card">
+          <div class="card-top">
+            <img src="assets/notiv.png" alt="Notiv Icon" class="app-icon-img" />
+            <span class="status-tag">Minimalist</span>
+          </div>
+          <h3>Notiv Smart Notes</h3>
+          <p>Distraction-free markdown notepad with intuitive checklist workflows. Engineered for rapid thought capture, developer code snippets, and structured daily action items without latency.</p>
+          <ul class="feature-list">
+            <li>Zero lag instant cold start (&lt; 200ms)</li>
+            <li>Biometric app lock & encrypted local databases</li>
+            <li>Clean typography optimized for long reading</li>
+          </ul>
+          <div class="tags">
+            <span class="tag">Markdown</span>
+            <span class="tag">EncryptedSharedPreferences</span>
+            <span class="tag">Personal</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Engineering Philosophy -->
+    <section id="engineering" class="container">
+      <div class="engineering-section">
+        <div class="section-header" style="margin-bottom: 24px;">
+          <div class="section-eyebrow">Engineering Excellence</div>
+          <h2 class="section-title">Built with Zero Compromise</h2>
+          <p class="section-subtitle">We reject flimsy template apps and intrusive adware. Every product engineered under The LARP Studio brand complies with rigorous architectural standards.</p>
+        </div>
+
+        <div class="eng-grid">
+          <div class="eng-card">
+            <div class="eng-icon">🔒</div>
+            <h4>Privacy By Design</h4>
+            <p>We process heavy media workloads directly on-device using Android NDK and RenderScript/Vulkan, avoiding unnecessary remote telemetry and preserving user anonymity.</p>
+          </div>
+          <div class="eng-card">
+            <div class="eng-icon">⚡</div>
+            <h4>Peak Android Vitals</h4>
+            <p>Our codebases target the latest Android SDK versions (API 34/35+), maintaining 0.00% ANR thresholds and near-zero crash rates across fragmented hardware profiles.</p>
+          </div>
+          <div class="eng-card">
+            <div class="eng-icon">🛡️</div>
+            <h4>Policy & Brand Integrity</h4>
+            <p>Full adherence to Google Play Developer Distribution Agreements, Apple App Store Guidelines, and intellectual property trademarks. Pure original creations.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Corporate Registry & Compliance Section -->
+    <section id="corporate" class="container corporate-section">
+      <div class="section-header">
+        <div class="section-eyebrow">Corporate Governance</div>
+        <h2 class="section-title">Legal Entity & Verification</h2>
+        <p class="section-subtitle">Official company registration details for international partners, financial institutions, and app store developer ecosystems.</p>
+      </div>
+
+      <div class="corporate-card">
+        <div class="corp-grid">
+          <div class="corp-item">
+            <h5>Legal Corporate Entity</h5>
+            <p>PT THE LARP STUDIO <span class="badge-gov">Verified PT</span></p>
+          </div>
+          <div class="corp-item">
+            <h5>NIB (Nomor Induk Berusaha)</h5>
+            <p>2211260004713 <span class="badge-gov">OSS RI</span></p>
+          </div>
+          <div class="corp-item">
+            <h5>SK Kemenkumham RI</h5>
+            <p>AHU-A141787.AH.01.30.2026</p>
+          </div>
+
+          <div class="corp-item">
+            <h5>Corporate Tax ID (NPWP)</h5>
+            <p>1000000012050628</p>
+          </div>
+          <div class="corp-item">
+            <h5>Primary Industry (KBLI)</h5>
+            <p>58290 (Software Publishing)</p>
+          </div>
+          <div class="corp-item">
+            <h5>Secondary Industry (KBLI)</h5>
+            <p>62199 (Computer Programming)</p>
+          </div>
+
+          <div class="corp-item full-width">
+            <h5>Registered Headquarters Address</h5>
+            <p>Kp. Babakan RT 003 RW 004, Desa Jambenenggang, Kec. Kebonpedes, Kab. Sukabumi, Jawa Barat 43194, Republic of Indonesia</p>
+          </div>
+
+          <div class="corp-item" id="contact">
+            <h5>Corporate Contact Email</h5>
+            <p><a href="mailto:thelarpstudio@gmail.com" style="color: var(--primary-light); text-decoration: none;">thelarpstudio@gmail.com</a></p>
+          </div>
+          <div class="corp-item">
+            <h5>Telephone / WhatsApp</h5>
+            <p>+62 882-0005-40059</p>
+          </div>
+          <div class="corp-item">
+            <h5>Authorized Representative</h5>
+            <p>Ibnu Zaki Alhawari (Director)</p>
+          </div>
+        </div>
+
+        <div class="compliance-divider"></div>
+
+        <div class="compliance-footer-info">
+          <div>
+            <strong>Legal Standing:</strong> Perseroan Terbatas Perorangan disahkan resmi oleh Menteri Hukum Republik Indonesia sesuai UU Cipta Kerja & PP RI.
+          </div>
+          <div>
+            <strong>Global Registry:</strong> Listed on Dun & Bradstreet (D&B) & Google Play Console Organization.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-brand">
+        <div class="brand-icon" style="width: 32px; height: 32px; font-size: 1rem;">L</div>
+        <span>The LARP Studio</span>
+      </div>
+      <div class="footer-links">
+        <a href="#products">Portfolio</a>
+        <a href="#engineering">Architecture</a>
+        <a href="#corporate">Corporate Details</a>
+        <a href="mailto:thelarpstudio@gmail.com">Developer Inquiries</a>
+      </div>
+      <p class="copyright">&copy; 2026 PT THE LARP STUDIO. All rights reserved. Registered in Republic of Indonesia.</p>
+    </div>
+  </footer>
+</body>
+</html>
